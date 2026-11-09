@@ -139,7 +139,15 @@
     // main tab plays the song too (the click counts as the user gesture autoplay needs)
     var song = new Audio(MP3);
     song.loop = true;
-    song.play().catch(function () {});
+    song.addEventListener('error', function () {
+      var c = song.error ? song.error.code : '?';
+      document.title = 'burgers.mp3 failed (code ' + c + ')';
+      console.error('burgers.mp3 failed to load:', MP3, song.error);
+    });
+    song.play().catch(function (e) {
+      document.title = 'play blocked: ' + e.name;
+      console.error('play() rejected:', e);
+    });
 
     for (var i = 0; i < START; i++) spawn();   // inside the click so the browser allows it
 
