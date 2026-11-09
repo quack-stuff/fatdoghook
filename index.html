@@ -71,6 +71,7 @@
   var PER_CLOSE = 2;    // heads grown per closed window
   var MAX_ALIVE = 9;    // cap on windows open at once
   var MAX_TOTAL = 30;   // cap on windows spawned overall
+  var SPEED = 1.4;      // speed multiplier (1 = original speed)
 
   var wins = [], total = 0, counter = 0;
 
@@ -96,8 +97,8 @@
     total++;
     wins.push({
       p: p, x: x, y: y,
-      vx: (Math.random() < 0.5 ? -1 : 1) * (45 + Math.random() * 40),
-      vy: (Math.random() < 0.5 ? -1 : 1) * (40 + Math.random() * 40)
+      vx: (Math.random() < 0.5 ? -1 : 1) * (45 + Math.random() * 40) * SPEED,
+      vy: (Math.random() < 0.5 ? -1 : 1) * (40 + Math.random() * 40) * SPEED
     });
   }
 
@@ -122,8 +123,8 @@
       if (o.x + w >= L + W) { o.x = L + W - w; o.vx = -Math.abs(o.vx); hitX = true; }
       if (o.y <= T) { o.y = T; o.vy = Math.abs(o.vy); hitY = true; }
       if (o.y + h >= T + H) { o.y = T + H - h; o.vy = -Math.abs(o.vy); hitY = true; }
-      if (hitX) o.vx = (o.vx < 0 ? -1 : 1) * (45 + Math.random() * 60);
-      if (hitY) o.vy = (o.vy < 0 ? -1 : 1) * (40 + Math.random() * 55);
+      if (hitX) o.vx = (o.vx < 0 ? -1 : 1) * (45 + Math.random() * 60) * SPEED;
+      if (hitY) o.vy = (o.vy < 0 ? -1 : 1) * (40 + Math.random() * 55) * SPEED;
       try { o.p.moveTo(Math.round(o.x), Math.round(o.y)); } catch (e) {}
     });
 
